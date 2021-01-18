@@ -18,6 +18,11 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'email' => ['required', 'email', 'unique:users'], //Con :users haces referencia a la tabla donde Laravel comprobara la unicidad
+            'password' => ['required', 'min:8']
+        ]);
         User::create([
             'name'=>$request->name,
             'email' => $request->email,
